@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="{{ url_for('routes.index') }}">Jeremias Panozzo</a>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('routes.contacto')}}">Contacto</a>
+            <a href="{{ url_for('routes.blogs')}}">Blogs</a>
+            <form class="search-form" action="{{ url_for('routes.buscar') }}" method="get">
+                <input type="text" name="q" placeholder="Buscar..." required>
+                <button type="submit">🔍</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="content">
+        {% block body %}
+        {% endblock %}
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2025 Jeremias Panozzo. Todos los derechos reservados.</p>
+        <p>Contacto: <a href="mailto:jeremiaspanozzo@ejemplo.com">jeremiaspanozzo@ejemplo.com</a></p>
+    </footer>
+</body>
+</html>

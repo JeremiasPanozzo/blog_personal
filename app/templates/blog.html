@@ -1,0 +1,22 @@
+{% extends "./layout.html" %}
+
+{% block title %}Blog | Jeremias Panozzo{% endblock %}
+
+{% block body %}
+<h1>Blog</h1>
+
+<section class="blog-posts">
+  {% if posts %}
+    {% for post in posts %}
+      <article class="blog-post">
+        <h2>{{ post.titulo }}</h2>
+        <p><em>Categoría: {{ post.categoria or 'Sin categoría' }}</em></p>
+        <p>{{ post.contenido }}</p>
+        <p><small>Publicado el {{ post.fecha_creacion }}</small></p>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p>No hay posts para mostrar.</p>
+  {% endif %}
+</section>
+{% endblock %}
