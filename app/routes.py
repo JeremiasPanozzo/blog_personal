@@ -23,40 +23,25 @@ def blogs():
     conn.close()
     return render_template("blog.html", posts=posts)
 
-@bp.route("/buscar", methods=["GET"])
-def buscar():
-    query = request.args.get("q", "").strip()
-    conn = get_db_connection()
-
-    if not query:
-        # Si no envían búsqueda, mostramos todos o mensaje vacío
-        posts = conn.execute("""
-            SELECT posts.*, categories.name AS category
-            FROM posts
-            LEFT JOIN categories ON posts.category_id = categories.id
-            ORDER BY date_created DESC
-        """).fetchall()
-    else:
-        # Búsqueda segura con LIKE y parámetros
-        like_query = f"%{query}%"
-        posts = conn.execute("""
-            SELECT posts.*, categories.name AS category
-            FROM posts
-            LEFT JOIN categories ON posts.category_id = categories.id
-            WHERE posts.title LIKE ? OR posts.content LIKE ?
-            ORDER BY date_created DESC
-        """, (like_query, like_query)).fetchall()
-
-    conn.close()
-
-    return render_template("blog.html", posts=posts, search=query)
-
 @bp.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
 
-@bp.route("/publicar")
+@bp.route("/publicar" , methods=["GET", "POST"])
 def publicar():
+    if request.method == "POST":
+        titulo = request.form.get("titulo")
+        contenido = request.form.get("contenido")
+        categoria = request.form.get("categoria")
+
+        conn = get_db_connection()
+        
+        conn.execute("INSERT INTO posts (titulo, contenido, categoria) VALUES (?, ?, ?)", (titulo, contenido, categoria))
+        
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("routes.index"))
     return render_template("publicar.html")
 
 @bp.app_errorhandler(404)

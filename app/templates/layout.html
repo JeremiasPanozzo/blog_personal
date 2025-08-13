@@ -17,13 +17,19 @@
             <a href="{{ url_for('routes.index') }}">Jeremias Panozzo</a>
         </div>
         <div class="nav-links">
-            <a href="{{ url_for('routes.contacto')}}">Contacto</a>
-            <a href="{{ url_for('routes.blogs')}}">Blogs</a>
-            <a href="{{ url_for('auth.login')}}">Iniciar sesion</a>
-            <form class="search-form" action="{{ url_for('routes.buscar') }}" method="get">
-                <input type="text" name="q" placeholder="Buscar..." required>
-                <button type="submit">🔍</button>
-            </form>
+            {% if session.get('logged_in') %}
+            <!-- Solo para admin (logueado) -->
+                <a href="{{ url_for('routes.dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('routes.publicar') }}">Publicar</a>
+                <form action="{{ url_for('auth.logout') }}" method="post" style="display:inline;">
+                    <button class="logout-button" type="submit">Cerrar sesión</button>
+                </form>
+            {% else %}
+            <!-- Solo para visitantes -->
+                <a href="{{ url_for('auth.login') }}">Iniciar sesión</a>
+                <a href="{{ url_for('routes.contacto')}}">Contacto</a>
+                <a href="{{ url_for('routes.blogs')}}">Blogs</a>
+            {% endif %}
         </div>
     </nav>
 

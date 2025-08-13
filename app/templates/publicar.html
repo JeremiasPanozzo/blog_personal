@@ -1,0 +1,26 @@
+{% extends "./layout.html" %}
+
+{% block title %}Publicar post{% endblock %}
+
+{% block body %}
+
+<h1>Publicar Nuevo Post</h1>
+
+<form action="{{ url_for('routes.publicar') }}" method="post">
+    <label for="titulo">Título:</label>
+    <input type="text" id="titulo" name="titulo" required>
+
+    <label for="contenido">Contenido:</label>
+    <textarea id="contenido" name="contenido" rows="10" required></textarea>
+
+    <label for="categoria">Categoría:</label>
+    <select name="categoria">
+        <option value="General">General</option>
+        <option value="Hacking">Hacking</option>
+        <option value="Personal">Personal</option>
+    </select>
+
+    <button type="submit">Publicar</button>
+</form>
+
+{% endblock %}
