@@ -51,6 +51,14 @@ def buscar():
 
     return render_template("blog.html", posts=posts, search=query)
 
+@bp.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
+
+@bp.route("/publicar")
+def publicar():
+    return render_template("publicar.html")
+
 @bp.app_errorhandler(404)
 def pagina_no_encontrada(error):
     return render_template("404.html"), 404
