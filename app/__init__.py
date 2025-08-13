@@ -56,9 +56,6 @@ def init_db():
     admin_pw = os.getenv("ADMIN_PASSWORD", "")
     hashed_pw = generate_password_hash(admin_pw)  
     
-    c.execute("INSERT OR IGNORE INTO usuarios (nombre_usuario, password_hash) VALUES (?, ?)", ("jeremias", hashed_pw))
-    c.execute("INSERT OR IGNORE INTO categorias (nombre) VALUES ('General'), ('Hacking'), ('Personal')")    
-    
     conn.commit()
     conn.close()
 

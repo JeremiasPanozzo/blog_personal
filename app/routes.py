@@ -17,7 +17,7 @@ def blogs():
     conn = get_db_connection()
 
     posts = conn.execute("""SELECT posts.titulo, posts.contenido, posts.fecha_creacion, categorias.nombre AS categoria
-        FROM posts LEFT JOIN categorias ON posts.id = categorias.id
+        FROM posts LEFT JOIN categorias ON posts.categoria_id = categorias.id
         ORDER BY posts.fecha_creacion DESC""").fetchall()
     
     conn.close()
@@ -29,20 +29,22 @@ def dashboard():
 
 @bp.route("/publicar" , methods=["GET", "POST"])
 def publicar():
-    if request.method == "POST":
-        titulo = request.form.get("titulo")
-        contenido = request.form.get("contenido")
-        categoria = request.form.get("categoria")
+    with get_db_connection() as conn:
 
-        conn = get_db_connection()
-        
-        conn.execute("INSERT INTO posts (titulo, contenido, categoria) VALUES (?, ?, ?)", (titulo, contenido, categoria))
-        
-        conn.commit()
-        conn.close()
+        if request.method == "POST":
+            titulo = request.form.get("titulo")
+            contenido = request.form.get("contenido")
+            categoria_id = request.form.get("categoria")
 
-        return redirect(url_for("routes.index"))
-    return render_template("publicar.html")
+            fecha_creacion = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            conn.execute("INSERT INTO posts (titulo, contenido, categoria_id, fecha_creacion) VALUES (?, ?, ?, ?)", (titulo, contenido, categoria_id, fecha_creacion))
+            conn.commit()
+
+            return redirect(url_for("routes.index"))
+    
+        categorias = [dict(cat) for cat in conn.execute("SELECT id, nombre FROM categorias").fetchall()]
+        return render_template("publicar.html", categorias=categorias)
 
 @bp.app_errorhandler(404)
 def pagina_no_encontrada(error):

@@ -2,25 +2,34 @@
 
 {% block title %}Publicar post{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/publicar.css') }}">
+{% endblock %}
+
 {% block body %}
 
+<div class="post-container">
 <h1>Publicar Nuevo Post</h1>
+    <form action="{{ url_for('routes.publicar') }}" method="post">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" required>
 
-<form action="{{ url_for('routes.publicar') }}" method="post">
-    <label for="titulo">Título:</label>
-    <input type="text" id="titulo" name="titulo" required>
+        <label for="contenido">Contenido:</label>
+        <textarea id="contenido" name="contenido" rows="10" required></textarea>
 
-    <label for="contenido">Contenido:</label>
-    <textarea id="contenido" name="contenido" rows="10" required></textarea>
+        <label for="categoria">Categoría:</label>
+        <select name="categoria">
+            {% if categorias %}
+                {% for cat in categorias %}
+                    <option value="{{ cat['id'] }}">{{ cat['nombre'] }}</option>
+                {% endfor %}
+            {% else %}
+                <option disabled>No hay categorías</option>
+            {% endif %}
+        </select>
 
-    <label for="categoria">Categoría:</label>
-    <select name="categoria">
-        <option value="General">General</option>
-        <option value="Hacking">Hacking</option>
-        <option value="Personal">Personal</option>
-    </select>
-
-    <button type="submit">Publicar</button>
-</form>
+        <button type="submit">Publicar</button>
+    </form>
+</div>
 
 {% endblock %}

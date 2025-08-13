@@ -2,6 +2,10 @@
 
 {% block title %}Blog | Jeremias Panozzo{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+{% endblock %}
+
 {% block body %}
 <h1>Blog</h1>
 
