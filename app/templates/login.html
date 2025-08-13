@@ -10,6 +10,7 @@
 <div class="login-container">
     <h1>Iniciar Sesión</h1>
     <form method="post" action="{{ url_for('auth.login') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <label for="username">Nombre de Usuario:</label>
         <input type="text" id="username" name="username" required>
         <br>

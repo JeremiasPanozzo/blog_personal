@@ -1,10 +1,12 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from . import get_db_connection
 from werkzeug.security import check_password_hash
+from .extensions import limiter
 
 bp = Blueprint("auth", __name__)
 
 @bp.route('/login', methods=['GET', 'POST'])
+@limiter.limit("5 per minute")
 def login():
     if request.method == "POST":
         username = request.form["username"]
@@ -17,6 +19,7 @@ def login():
         conn.close()
 
         if user and check_password_hash(user["password_hash"], password):
+            session.clear()
             session.permanent = True
             
             session["logged_in"] = True

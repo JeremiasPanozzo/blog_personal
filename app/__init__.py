@@ -4,9 +4,13 @@ import os
 from werkzeug.security import generate_password_hash
 from dotenv import load_dotenv
 from datetime import timedelta
+from flask_wtf import CSRFProtect
+from .extensions import limiter
 
 DATABASE = os.path.join(os.path.dirname(__file__), '..', 'database.db')
 load_dotenv()
+
+csrf = CSRFProtect()
 
 def create_app():
     app = Flask(__name__)
@@ -15,6 +19,17 @@ def create_app():
     app.config["WTF_CSRF_ENABLED"] = True
     #Duracion de la sesion
     app.permanent_session_lifetime = timedelta(minutes=30)
+
+    # Cookies y headers más seguros (en dev, si no usas HTTPS, puedes desactivar SECURE temporalmente)
+    app.config.update(
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SECURE=False,      # Requiere HTTPS
+        SESSION_COOKIE_SAMESITE='Lax',
+        PERMANENT_SESSION_LIFETIME=1800
+    )
+
+    csrf.init_app(app)
+    limiter.init_app(app)
 
     from . import routes, auth 
 
