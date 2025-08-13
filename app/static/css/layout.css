@@ -59,38 +59,6 @@ body {
 }
 
 /* -------------------------
-   SEARCH FORM
-------------------------- */
-.search-form {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-}
-
-.search-form input {
-    padding: 0.3rem 0.6rem;
-    border-radius: 4px 0 0 4px;
-    border: none;
-    outline: none;
-    font-size: 0.9rem;
-}
-
-.search-form button {
-    padding: 0.3rem 0.6rem;
-    border: none;
-    background-color: #ff9800;
-    color: white;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 0.9rem;
-}
-
-.search-form button:hover {
-    background-color: #e68900;
-}
-
-/* -------------------------
    CONTENT
 ------------------------- */
 .content {
