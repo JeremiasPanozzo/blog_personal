@@ -47,8 +47,12 @@ body {
 }
 
 .logout-button {
+    background: none;         /* Fondo transparente */
+    border: none;             /* Sin borde */
+    padding: 0;               /* Quitar padding por defecto */
+    cursor: pointer;          /* Mano al pasar */
+    font: inherit;            /* Heredar tipografía */
     color: white;
-    text-decoration: none;
     margin: 0 0.8rem;
     font-weight: 500;
     transition: color 0.3s ease;
