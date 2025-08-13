@@ -1,12 +1,17 @@
 {% extends "./layout.html" %}
 
 {% block title %}Contacto | Jeremias Panozzo{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contacto.css') }}">
+{% endblock %}
 {% block body %}
-<form action="{{ url_for('routes.contacto') }}" method="post">
-    <label for="name">Nombre:</label><br>
-    <input type="text" id="name" name="name" required>
-    <br>
-    <label for="email">Email:</label><br>
+<div class="contact-container">
+    <h1>Contactame</h1>
+    <form action="{{ url_for('routes.contacto') }}" method="post">
+        <label for="name">Nombre:</label><br>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="email">Email:</label><br>
     <input type="email" id="email" name="email" required>
     <br>
     <label for="message">Mensaje:</label><br>
