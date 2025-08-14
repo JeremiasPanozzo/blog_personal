@@ -1,0 +1,36 @@
+{% extends "./layout.html" %}
+
+{% block title %}Mensajes | Admin{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mensajes.css') }}">
+{% endblock %}
+
+{% block body %}
+<h1>Mensajes recibidos</h1>
+
+{% if mensajes %}
+    <table class="mensajes-table">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Mensaje</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for m in mensajes %}
+            <tr>
+                <td>{{ m['fecha_creacion'] }}</td>
+                <td>{{ m['nombre'] }}</td>
+                <td>{{ m['email'] }}</td>
+                <td>{{ m['mensaje'] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No hay mensajes.</p>
+{% endif %}
+{% endblock %}

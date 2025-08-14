@@ -68,9 +68,26 @@ def init_db():
         )
     ''')
 
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS mensajes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            email TEXT NOT NULL,
+            mensaje TEXT NOT NULL,
+            fecha_creacion TEXT NOT NULL
+        )
+    ''')
+
+    admin_user = os.getenv("ADMIN_USERNAME", "admin")
     admin_pw = os.getenv("ADMIN_PASSWORD", "")
-    hashed_pw = generate_password_hash(admin_pw)  
+    if admin_pw.strip() == "":
+        raise ValueError("Debes definir ADMIN_PASSWORD en el archivo .env")
+    hashed_pw = generate_password_hash(admin_pw) 
     
+    c.execute("SELECT id FROM usuarios WHERE nombre_usuario = ?", (admin_user,))
+    if not c.fetchone():
+        c.execute("INSERT INTO usuarios (nombre_usuario, password_hash) VALUES (?, ?)", (admin_user, hashed_pw))
+
     conn.commit()
     conn.close()
 

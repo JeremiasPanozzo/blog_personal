@@ -1,0 +1,38 @@
+.mensajes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0px 3px 8px rgba(0,0,0,0.1);
+}
+
+.mensajes-table th {
+    background-color: #333;
+    color: white;
+    text-align: left;
+    padding: 12px 15px;
+    font-weight: bold;
+}
+
+.mensajes-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.mensajes-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.mensajes-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.no-mensajes {
+    margin-top: 20px;
+    font-size: 1.1em;
+    color: #555;
+}

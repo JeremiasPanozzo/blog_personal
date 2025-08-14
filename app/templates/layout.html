@@ -17,10 +17,11 @@
             <a href="{{ url_for('routes.index') }}">Jeremias Panozzo</a>
         </div>
         <div class="nav-links">
-            {% if session.get('logged_in') %}
+            {% if session.get('logged_in') and session.get('is_admin') %}
             <!-- Solo para admin (logueado) -->
                 <a href="{{ url_for('routes.dashboard') }}">Dashboard</a>
                 <a href="{{ url_for('routes.publicar') }}">Publicar</a>
+                <a href="{{ url_for('routes.mensajes') }}">Mensajes</a>
                 <form action="{{ url_for('auth.logout') }}" method="post" style="display:inline;">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button class="logout-button" type="submit">Cerrar sesión</button>
