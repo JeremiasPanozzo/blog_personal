@@ -1,5 +1,6 @@
-from flask import Flask, app
+from flask import Flask
 import sqlite3
+from sqlite3 import Error
 import os
 from werkzeug.security import generate_password_hash
 from dotenv import load_dotenv
@@ -104,6 +105,9 @@ def init_db():
     conn.close()
 
 def get_db_connection():
-    conn = sqlite3.connect(DATABASE)
-    conn.row_factory = sqlite3.Row
-    return conn 
+    try: 
+        conn = sqlite3.connect(DATABASE)
+        conn.row_factory = sqlite3.Row
+        return conn
+    except Error as e:
+        raise e
