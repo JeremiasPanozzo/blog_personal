@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, app
 import sqlite3
 import os
 from werkzeug.security import generate_password_hash
@@ -37,6 +37,13 @@ def create_app():
     app.register_blueprint(routes.bp) 
 
     init_db()
+
+    @app.context_processor
+    def inject_mensajes_nuevos():
+        conn = get_db_connection()
+        count = conn.execute("SELECT COUNT(*) FROM mensajes WHERE leido = 0").fetchone()[0]
+        conn.close()
+        return dict(nuevos_mensajes=count)
 
     return app
 
@@ -87,6 +94,11 @@ def init_db():
     c.execute("SELECT id FROM usuarios WHERE nombre_usuario = ?", (admin_user,))
     if not c.fetchone():
         c.execute("INSERT INTO usuarios (nombre_usuario, password_hash) VALUES (?, ?)", (admin_user, hashed_pw))
+    # Solo si el campo no existe
+    c.execute("PRAGMA table_info(mensajes)")
+    columnas = [col[1] for col in c.fetchall()]
+    if "leido" not in columnas:
+        c.execute("ALTER TABLE mensajes ADD COLUMN leido INTEGER DEFAULT 0")
 
     conn.commit()
     conn.close()

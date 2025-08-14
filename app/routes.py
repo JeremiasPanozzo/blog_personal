@@ -74,7 +74,9 @@ def mensajes():
         FROM mensajes
         ORDER BY fecha_creacion DESC
     """).fetchall()
-    
+
+    conn.execute("UPDATE mensajes SET leido = 1 WHERE leido = 0")
+    conn.commit()
     conn.close()
     return render_template("mensajes.html", mensajes=mensajes)
 
