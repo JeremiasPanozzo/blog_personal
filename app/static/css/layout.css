@@ -66,10 +66,10 @@ body {
    CONTENT
 ------------------------- */
 .content {
-    flex: 1;
+    flex: 1 0 auto;
     padding: 2rem;
     max-width: 1100px;
-    margin: auto;
+    margin: 0 auto;
 }
 
 /* -------------------------

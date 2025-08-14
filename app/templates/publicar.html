@@ -11,6 +11,7 @@
 <div class="post-container">
 <h1>Publicar Nuevo Post</h1>
     <form action="{{ url_for('routes.publicar') }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <label for="titulo">Título:</label>
         <input type="text" id="titulo" name="titulo" required>
 
